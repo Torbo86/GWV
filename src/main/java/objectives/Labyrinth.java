@@ -12,5 +12,13 @@ public class Labyrinth {
         this.player = player;
     }
 
+    public Position getGoal() {
+        return goal;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
     // v(s -> (x,y), g -> (x,y)) -> aim -> v(g, s)
 }

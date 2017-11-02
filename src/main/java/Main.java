@@ -1,4 +1,7 @@
 import Services.LabyrinthFileReader;
+import Services.SearchSpaceService;
+import objectives.Labyrinth;
+import objectives.SearchState;
 
 import java.io.File;
 
@@ -9,6 +12,11 @@ public class Main {
     public static void main(String... args){
         LabyrinthFileReader reader = new LabyrinthFileReader();
 
-        reader.readLabyrinthFile(new File(FIRST_LABYRINTH));
+        Labyrinth labyrinth = reader.readLabyrinthFile(new File(FIRST_LABYRINTH));
+
+        SearchSpaceService searchSpaceService = new SearchSpaceService(labyrinth);
+
+        searchSpaceService.printAllSearchState();
+
     }
 }

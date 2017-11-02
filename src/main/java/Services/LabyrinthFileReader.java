@@ -43,7 +43,7 @@ public class LabyrinthFileReader {
     }
 
     private Position getGoalPosition(char[][] playGround) {
-        List<Position> goalPositionList = lookForSpecificCharInCharArray(playGround, 'G');
+        List<Position> goalPositionList = lookForSpecificCharInCharArray(playGround, 'g');
         if(goalPositionList.size() == 1){
             return goalPositionList.get(0);
         } else {
@@ -52,7 +52,7 @@ public class LabyrinthFileReader {
     }
 
     private Position getStartPosition(char[][] charArray){
-        List<Position> startPositionList = lookForSpecificCharInCharArray(charArray, 'S');
+        List<Position> startPositionList = lookForSpecificCharInCharArray(charArray, 's');
         if(startPositionList.size() == 1){
            return startPositionList.get(0);
         } else {

@@ -8,4 +8,9 @@ public class Player {
         this.position = position;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
+
 }
