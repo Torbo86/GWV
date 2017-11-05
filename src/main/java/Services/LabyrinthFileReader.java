@@ -32,12 +32,12 @@ public class LabyrinthFileReader {
                 playGround[i] = stringList.get(i).toCharArray();
             }
 
-            System.out.println("Test");
         } catch (IOException e){
             e.getStackTrace();
-
         }
         Player player = new Player(getStartPosition(playGround));
+
+        // Flip playground
 
         return new Labyrinth(playGround, getGoalPosition(playGround), player);
     }
@@ -70,7 +70,6 @@ public class LabyrinthFileReader {
                 }
             }
         }
-
         return positionList;
     }
 }
