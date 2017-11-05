@@ -9,11 +9,11 @@ public class Labyrinth {
     private Player player;
     private Graph graph;
 
-    public Labyrinth(final char[][] playground, final Position goal, final Player player){
+    public Labyrinth(final char[][] playground, final Position goal, final Position start) {
         this.playground = playground;
         this.goal = goal;
-        this.player = player;
         graph = new Graph(playground);
+        this.player = new Player(graph.getNodeAtPosition(start));
     }
 
     public Position getGoal() {

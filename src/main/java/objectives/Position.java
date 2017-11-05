@@ -40,8 +40,8 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Position){
-            Position pos2 = (Position)obj;
+        if (obj instanceof Position) {
+            Position pos2 = (Position) obj;
             return
                     (pos2.getX() == this.getX()) &&
                             (pos2.getY() == this.getY());

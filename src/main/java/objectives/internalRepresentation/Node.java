@@ -4,39 +4,49 @@ import objectives.Position;
 
 public abstract class Node {
 
-    protected Node northNachbar;
-    protected Node eastNachbar;
-    protected Node southNachbar;
-    protected Node westNachbar;
+    private Node northNachbar;
+    private Node eastNachbar;
+    private Node southNachbar;
+    private Node westNachbar;
     Position position;
 
-//    public Node(Node eastNachbar, Node northNachbar, Node southNachbar, Node westNachbar){
-//        this.northNachbar = northNachbar;
-//        this.eastNachbar = eastNachbar;
-//        this.southNachbar = southNachbar;
-//        this.westNachbar = westNachbar;
-//    }
-    public Node(Position position){
+    Node(Position position) {
         this.position = position;
     }
 
-    public void setEastNachbar(Node eastNachbar) {
+    void setEastNachbar(Node eastNachbar) {
         this.eastNachbar = eastNachbar;
     }
 
-    public void setNorthNachbar(Node northNachbar) {
+    void setNorthNachbar(Node northNachbar) {
         this.northNachbar = northNachbar;
     }
 
-    public void setSouthNachbar(Node southNachbar) {
+    void setSouthNachbar(Node southNachbar) {
         this.southNachbar = southNachbar;
     }
 
-    public void setWestNachbar(Node westNachbar) {
+    void setWestNachbar(Node westNachbar) {
         this.westNachbar = westNachbar;
     }
 
-    public Position getPosition(){
+    public Position getPosition() {
         return position;
+    }
+
+    public Node getNorthNachbar() {
+        return northNachbar;
+    }
+
+    public Node getEastNachbar() {
+        return eastNachbar;
+    }
+
+    public Node getSouthNachbar() {
+        return southNachbar;
+    }
+
+    public Node getWestNachbar() {
+        return westNachbar;
     }
 }

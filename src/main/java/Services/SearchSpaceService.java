@@ -9,19 +9,26 @@ import java.util.List;
 public class SearchSpaceService {
 
     private Labyrinth labyrinth;
-    private List<SearchState> searchStateList = new ArrayList<>();
+    private final List<SearchState> searchStateList = new ArrayList<>();
 
-
-    public SearchSpaceService(Labyrinth labyrinth){
+    public SearchSpaceService(Labyrinth labyrinth) {
         this.labyrinth = labyrinth;
-        searchStateList.add(extractSearchStateFromLabyrinth(labyrinth));
+        searchStateList.add(extractSearchStateFromLabyrinth());
     }
 
-    private SearchState extractSearchStateFromLabyrinth(Labyrinth labyrinth) {
-        return new SearchState(labyrinth.getGoal(), labyrinth.getPlayer().getPosition());
+    /**
+     * This method extract from labyrinth the actual state
+     *
+     * @return the SearchState from actual labyrinth
+     */
+    private SearchState extractSearchStateFromLabyrinth() {
+        return new SearchState(labyrinth.getGoal(), labyrinth.getPlayer().getNode().getPosition());
     }
 
-    public void printAllSearchStates(){
+    /**
+     * This method print all search states which are in the List
+     */
+    public void printAllSearchStates() {
         final int[] i = {1};
         searchStateList.forEach(searchState -> {
             System.out.println("State " + i[0] + " " + searchState.toString());

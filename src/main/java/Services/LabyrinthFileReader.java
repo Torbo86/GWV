@@ -4,7 +4,6 @@ import objectives.Labyrinth;
 import objectives.Player;
 import objectives.Position;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +17,7 @@ public class LabyrinthFileReader {
 
     /**
      * This method reads the given file and creates a labyrinth
+     *
      * @param file the file which should be read
      * @return the labyrinth object which is in the file
      */
@@ -28,45 +28,42 @@ public class LabyrinthFileReader {
             List<String> stringList = Files.readAllLines(file.toPath());
             playGround = new char[stringList.size()][];
 
-            for(int i = 0; i < stringList.size(); i++){
+            for (int i = 0; i < stringList.size(); i++) {
                 playGround[i] = stringList.get(i).toCharArray();
             }
 
-        } catch (IOException e){
+        } catch (IOException e) {
             e.getStackTrace();
         }
-        Player player = new Player(getStartPosition(playGround));
-
-        // Flip playground
-
-        return new Labyrinth(playGround, getGoalPosition(playGround), player);
+        return new Labyrinth(playGround, getGoalPosition(playGround), getStartPosition(playGround));
     }
+
 
     private Position getGoalPosition(char[][] playGround) {
         List<Position> goalPositionList = lookForSpecificCharInCharArray(playGround, 'g');
-        if(goalPositionList.size() == 1){
+        if (goalPositionList.size() == 1) {
             return goalPositionList.get(0);
         } else {
-            throw new RuntimeException("There isnt 1 Goalposition, there are: "+ goalPositionList.size());
+            throw new RuntimeException("There isnt 1 Goalposition, there are: " + goalPositionList.size());
         }
     }
 
-    private Position getStartPosition(char[][] charArray){
+    private Position getStartPosition(char[][] charArray) {
         List<Position> startPositionList = lookForSpecificCharInCharArray(charArray, 's');
-        if(startPositionList.size() == 1){
-           return startPositionList.get(0);
+        if (startPositionList.size() == 1) {
+            return startPositionList.get(0);
         } else {
             throw new RuntimeException("There isnt 1 Startposition, there are: " + startPositionList.size());
         }
     }
 
-    private List<Position> lookForSpecificCharInCharArray(char[][] charArray, final char specificChar){
+    private List<Position> lookForSpecificCharInCharArray(char[][] charArray, final char specificChar) {
         List<Position> positionList = new ArrayList<>();
 
-        for(int i = 0; i < charArray.length; i++){
-            for(int j = 0; j < charArray[i].length; j++){
-                if(charArray[i][j] == specificChar){
-                    positionList.add(new Position(i, j));
+        for (int i = 0; i < charArray.length; i++) {
+            for (int j = 0; j < charArray[i].length; j++) {
+                if (charArray[i][j] == specificChar) {
+                    positionList.add(new Position(j, i));
                 }
             }
         }

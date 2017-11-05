@@ -1,16 +1,16 @@
 package objectives;
 
+import objectives.internalRepresentation.Node;
+
 public class Player {
 
-    private Position position;
+    private Node node;
 
-    public Player(Position position){
-        this.position = position;
+    public Player(Node node) {
+        this.node = node;
     }
 
-    public Position getPosition() {
-        return position;
+    public Node getNode() {
+        return node;
     }
-
-
 }
