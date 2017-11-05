@@ -21,7 +21,7 @@ public class SearchSpaceService {
         return new SearchState(labyrinth.getGoal(), labyrinth.getPlayer().getPosition());
     }
 
-    public void printAllSearchState(){
+    public void printAllSearchStates(){
         final int[] i = {1};
         searchStateList.forEach(searchState -> {
             System.out.println("State " + i[0] + " " + searchState.toString());

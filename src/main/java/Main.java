@@ -1,7 +1,6 @@
 import Services.LabyrinthFileReader;
 import Services.SearchSpaceService;
 import objectives.Labyrinth;
-import objectives.SearchState;
 
 import java.io.File;
 
@@ -16,7 +15,7 @@ public class Main {
 
         SearchSpaceService searchSpaceService = new SearchSpaceService(labyrinth);
 
-        searchSpaceService.printAllSearchState();
+        searchSpaceService.printAllSearchStates();
 
     }
 }

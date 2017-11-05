@@ -18,3 +18,6 @@ public class SearchState {
                             ", PlayerY: " + playerPosition.getY()) + ")";
     }
 }
+
+
+//(xG,yG,xS,yS) -> Target: (x,y,x,y)
