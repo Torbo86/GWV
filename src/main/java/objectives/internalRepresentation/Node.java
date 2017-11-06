@@ -49,4 +49,6 @@ public abstract class Node {
     public Node getWestNachbar() {
         return westNachbar;
     }
+
+    public abstract boolean isPossible();
 }

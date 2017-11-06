@@ -36,5 +36,6 @@ public class SearchSpaceService {
         });
     }
 
+    // (PlayerY, PlayerX, GoalY, GoalX)
 
 }

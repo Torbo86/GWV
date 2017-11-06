@@ -17,7 +17,7 @@ public class Main {
     public static void main(String... args) {
         LabyrinthFileReader reader = new LabyrinthFileReader();
 
-        Labyrinth labyrinth = reader.readLabyrinthFile(new File(FIRST_LABYRINTH));
+        Labyrinth labyrinth = reader.readLabyrinthFile(new File(SECOND_LABYRINTH));
 
         SearchSpaceService searchSpaceService = new SearchSpaceService(labyrinth);
 
