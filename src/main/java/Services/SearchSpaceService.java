@@ -1,28 +1,26 @@
 package Services;
 
 import objectives.Labyrinth;
+import objectives.Position;
 import objectives.SearchState;
+import objectives.internalRepresentation.Node;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchSpaceService {
 
-    private Labyrinth labyrinth;
     private final List<SearchState> searchStateList = new ArrayList<>();
 
-    public SearchSpaceService(Labyrinth labyrinth) {
-        this.labyrinth = labyrinth;
-        searchStateList.add(extractSearchStateFromLabyrinth());
+    SearchSpaceService(Labyrinth labyrinth, Position startPosition) {
+        extractSearchStateFromLabyrinth(labyrinth, startPosition); // Das ist unser SearchState-Start
     }
 
     /**
      * This method extract from labyrinth the actual state
-     *
-     * @return the SearchState from actual labyrinth
      */
-    private SearchState extractSearchStateFromLabyrinth() {
-        return new SearchState(labyrinth.getGoal(), labyrinth.getPlayer().getNode().getPosition(), labyrinth.getGraph().getCharArrayFromGraph());
+    public void extractSearchStateFromLabyrinth(final Labyrinth labyrinth, Position playerPosition) {
+        searchStateList.add(new SearchState(labyrinth.getGoal(), playerPosition, labyrinth.getGraph().getCharArrayFromGraph()));
     }
 
     /**
@@ -36,6 +34,6 @@ public class SearchSpaceService {
         });
     }
 
-    // (PlayerY, PlayerX, GoalY, GoalX)
+
 
 }

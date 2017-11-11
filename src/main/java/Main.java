@@ -1,8 +1,11 @@
+import Services.BreadthFirstSearch;
 import Services.LabyrinthFileReader;
 import Services.SearchSpaceService;
 import objectives.Labyrinth;
+import objectives.internalRepresentation.Node;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * This is the main class
@@ -15,13 +18,12 @@ public class Main {
 
 
     public static void main(String... args) {
-        LabyrinthFileReader reader = new LabyrinthFileReader();
+        LabyrinthFileReader reader = new LabyrinthFileReader(); // Wir erstellen unsere File
 
-        Labyrinth labyrinth = reader.readLabyrinthFile(new File(SECOND_LABYRINTH));
+        Labyrinth labyrinth = reader.readLabyrinthFile(new File(FIRST_LABYRINTH)); //Welche Datei soll gelesen werden ?
 
-        SearchSpaceService searchSpaceService = new SearchSpaceService(labyrinth);
+        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(labyrinth); // Wir stellen unser Breitensuchen-Objekt
 
-        searchSpaceService.printAllSearchStates();
-
+        List<Node> nodeList = breadthFirstSearch.startSearch(); // Starten die Breitensuche
     }
 }

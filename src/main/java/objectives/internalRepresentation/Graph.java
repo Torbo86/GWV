@@ -9,6 +9,8 @@ import java.util.Optional;
 public class Graph {
 
     private final List<Node> nodeList = new ArrayList<>();
+    private Node goalNode;
+    private Node startNode;
 
     public Graph(char[][] charArray) {
         createGraphFromCharArray(charArray);
@@ -19,10 +21,12 @@ public class Graph {
             for (int j = 0; j < charArray[i].length; j++) {
                 switch (charArray[i][j]) {
                     case 's':
-                        nodeList.add(new StartNode(new Position(j, i)));
+                        startNode = new StartNode(new Position(j, i));
+                        nodeList.add(startNode);
                         break;
                     case 'g':
-                        nodeList.add(new GoalNode(new Position(j, i)));
+                        goalNode = new GoalNode(new Position(j, i));
+                        nodeList.add(goalNode);
                         break;
                     case 'x':
                         nodeList.add(new BoundNode(new Position(j, i)));
@@ -44,7 +48,7 @@ public class Graph {
             if(node instanceof BoundNode){
                 charArray[node.getPosition().getY()][node.getPosition().getX()] = 'x';
             } else if (node instanceof EmptyNode) {
-                if(node.isAlreadyVisisted()){
+                if(node.isInPath()){
                     charArray[node.getPosition().getY()][node.getPosition().getX()] = 'o';
                 } else {
                     charArray[node.getPosition().getY()][node.getPosition().getX()] = ' ';
@@ -70,5 +74,20 @@ public class Graph {
     public Node getNodeAtPosition(Position position) {
         Optional<Node> nodeAtPosition = nodeList.stream().filter(node -> node.getPosition().equals(position)).findFirst();
         return nodeAtPosition.orElse(null);
+    }
+
+    public Node getGoalNode(){
+        return goalNode;
+    }
+
+    public Node getStartNode() {
+        return startNode;
+    }
+
+    public void resetAllNodes(){
+        nodeList.forEach(node -> {
+            node.setInPath(false);
+            node.setAlreadyVisisted(false);
+        });
     }
 }

@@ -10,6 +10,7 @@ public abstract class Node {
     private Node westNachbar;
     private Position position;
     private boolean isAlreadyVisisted = false;
+    private boolean isInPath = false;
 
     Node(Position position) {
         this.position = position;
@@ -59,5 +60,18 @@ public abstract class Node {
 
     public void setAlreadyVisisted(boolean alreadyVisisted) {
         isAlreadyVisisted = alreadyVisisted;
+    }
+
+    @Override
+    public String toString(){
+        return getPosition().toString();
+    }
+
+    public boolean isInPath() {
+        return isInPath;
+    }
+
+    public void setInPath(boolean inPath) {
+        isInPath = inPath;
     }
 }
