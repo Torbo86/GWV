@@ -24,5 +24,7 @@ public class Labyrinth {
         return player;
     }
 
+    public Graph getGraph() { return graph;}
+
     // v(s -> (x,y), g -> (x,y)) -> aim -> v(g, s)
 }

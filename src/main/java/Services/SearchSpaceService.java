@@ -22,7 +22,7 @@ public class SearchSpaceService {
      * @return the SearchState from actual labyrinth
      */
     private SearchState extractSearchStateFromLabyrinth() {
-        return new SearchState(labyrinth.getGoal(), labyrinth.getPlayer().getNode().getPosition());
+        return new SearchState(labyrinth.getGoal(), labyrinth.getPlayer().getNode().getPosition(), labyrinth.getGraph().getCharArrayFromGraph());
     }
 
     /**

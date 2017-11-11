@@ -8,7 +8,8 @@ public abstract class Node {
     private Node eastNachbar;
     private Node southNachbar;
     private Node westNachbar;
-    Position position;
+    private Position position;
+    private boolean isAlreadyVisisted = false;
 
     Node(Position position) {
         this.position = position;
@@ -51,4 +52,12 @@ public abstract class Node {
     }
 
     public abstract boolean isPossible();
+
+    public boolean isAlreadyVisisted() {
+        return isAlreadyVisisted;
+    }
+
+    public void setAlreadyVisisted(boolean alreadyVisisted) {
+        isAlreadyVisisted = alreadyVisisted;
+    }
 }

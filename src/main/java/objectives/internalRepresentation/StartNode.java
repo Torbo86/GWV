@@ -2,8 +2,8 @@ package objectives.internalRepresentation;
 
 import objectives.Position;
 
-public class EmptyNode extends Node{
-    public EmptyNode(Position position) {
+public class StartNode extends Node {
+    StartNode(Position position) {
         super(position);
     }
 
