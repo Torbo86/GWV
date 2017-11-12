@@ -1,7 +1,6 @@
 package Services;
 
 import objectives.Labyrinth;
-import objectives.Player;
 import objectives.Position;
 
 import java.io.File;
@@ -35,12 +34,13 @@ public class LabyrinthFileReader {
         } catch (IOException e) {
             e.getStackTrace();
         }
-        return new Labyrinth(playGround, getGoalPosition(playGround), getStartPosition(playGround)); // Erstelle ein neues Labyrinth mit Start und Ziel
+        return new Labyrinth(playGround); // Erstelle ein neues Labyrinth mit Start und Ziel
     }
 
 
     /**
      * Diese Methode findet die Goal-Position
+     *
      * @param charArray in welchem Char-Array soll geschaut werden
      * @return die Position des Goal
      */
@@ -55,6 +55,7 @@ public class LabyrinthFileReader {
 
     /**
      * Diese Methode gibt uns im übergebenen Char-Array die Start Position
+     *
      * @param charArray das Char-Array wodrin geschaut werden soll
      * @return die Position des Starts
      */
@@ -69,7 +70,8 @@ public class LabyrinthFileReader {
 
     /**
      * Diese Methode liefer für einen spezifischen Character die Positionen zurück
-     * @param charArray In welchem Char-Array soll geschaut werden
+     *
+     * @param charArray    In welchem Char-Array soll geschaut werden
      * @param specificChar Nach welchen Char soll gesucht werden
      * @return eine Liste von allen Positionen
      */

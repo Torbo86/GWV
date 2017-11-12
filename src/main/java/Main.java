@@ -20,7 +20,7 @@ public class Main {
     public static void main(String... args) {
         LabyrinthFileReader reader = new LabyrinthFileReader(); // Wir erstellen unsere File
 
-        Labyrinth labyrinth = reader.readLabyrinthFile(new File(FIRST_LABYRINTH)); //Welche Datei soll gelesen werden ?
+        Labyrinth labyrinth = reader.readLabyrinthFile(new File(SECOND_LABYRINTH)); //Welche Datei soll gelesen werden ?
 
         BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(labyrinth); // Wir stellen unser Breitensuchen-Objekt
 

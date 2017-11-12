@@ -1,14 +1,5 @@
 package objectives;
 
-import com.sun.deploy.util.ArrayUtil;
-import com.sun.xml.internal.fastinfoset.util.CharArray;
-import com.sun.xml.internal.fastinfoset.util.CharArrayArray;
-import com.sun.xml.internal.fastinfoset.util.CharArrayString;
-import com.sun.xml.internal.fastinfoset.util.StringArray;
-
-import java.io.CharArrayReader;
-import java.lang.reflect.Array;
-
 public class SearchState {
 
     private Position goalPosition;
@@ -26,7 +17,7 @@ public class SearchState {
         StringBuilder builder = new StringBuilder();
 
         builder.append("\n");
-        for(int i = 0; i < playGround.length; i++){
+        for (int i = 0; i < playGround.length; i++) {
             builder.append(playGround[i]);
             builder.append("\n");
         }

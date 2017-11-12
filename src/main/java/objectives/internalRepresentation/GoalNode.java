@@ -2,8 +2,11 @@ package objectives.internalRepresentation;
 
 import objectives.Position;
 
+/**
+ * Diese Node repräsentiert das Ziel
+ */
 public class GoalNode extends Node {
-    public GoalNode(Position position) {
+    GoalNode(Position position) {
         super(position);
     }
 

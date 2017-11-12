@@ -2,8 +2,11 @@ package objectives.internalRepresentation;
 
 import objectives.Position;
 
-public class EmptyNode extends Node{
-    public EmptyNode(Position position) {
+/**
+ * Diese Node repräsentiert einfach ein leeres Feld
+ */
+public class EmptyNode extends Node {
+    EmptyNode(Position position) {
         super(position);
     }
 

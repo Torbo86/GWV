@@ -1,6 +1,5 @@
 package Services;
 
-import com.sun.org.apache.xerces.internal.dom.ParentNode;
 import objectives.Labyrinth;
 import objectives.Position;
 import objectives.internalRepresentation.GoalNode;
@@ -15,7 +14,7 @@ public class BreadthFirstSearch {
 
     public BreadthFirstSearch(final Labyrinth labyrinth) {
         this.labyrinth = labyrinth; //Setzen uns unser Labyrinth
-        searchSpaceService = new SearchSpaceService(labyrinth, labyrinth.getGraph().getStartNode().getPosition()); //Und
+        searchSpaceService = new SearchSpaceService();
     }
 
     public List<Node> startSearch() {
@@ -44,21 +43,22 @@ public class BreadthFirstSearch {
 
             parentNode.setInPath(true); // Bereits abgearbeitet
 //            if (queue.size() != queueSize) { // Wenn sich die Queuesize geändert hat, haben wir einen neuen State erreicht der uns auch was bringt.
-                searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition());
+            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition());
 //            }
         }
+        searchSpaceService.printAllSearchStates();
         return Collections.emptyList();
     }
 
     private List<Node> constructPath(Map<Position, Position> path, Node goalNode) {
         List<Node> nodeList = new ArrayList<>();
-        while(goalNode != null){
+        while (goalNode != null) {
             goalNode.setInPath(true);
             nodeList.add(goalNode);
             goalNode = labyrinth.getGraph().getNodeAtPosition(path.get(goalNode.getPosition()));
         }
         System.out.println(nodeList);
-        searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGoal());
+        searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGraph().getGoalNode().getPosition());
         searchSpaceService.printAllSearchStates();
         return nodeList;
     }
@@ -66,18 +66,19 @@ public class BreadthFirstSearch {
     /**
      * Diese Methode fügt einen Nachbarn der Queue hinzu wenn dieses überhaupt möglich ist (Keine Boundnode)
      * oder wenn dieser nicht bereits besucht wurde und ungleich null ist.
-     *
+     * <p>
      * Weiterhin werden die Nachbarn dann auch als bereits besucht markiert und in die Map mit den parentNodes
      * hinzugefügt
-     * @param queue Die Queue der Breitensuche
-     * @param nachbar Der Nachbar der untersucht wird
-     * @param map Die Map mit den Wegen
+     *
+     * @param queue      Die Queue der Breitensuche
+     * @param nachbar    Der Nachbar der untersucht wird
+     * @param map        Die Map mit den Wegen
      * @param parentNode Der ParentNode
      */
     private void addNodeToQueue(Queue<Node> queue, Node nachbar, Map<Position, Position> map, Node parentNode) {
         if (nachbar != null
                 && nachbar.isPossible()
-                && !nachbar.isAlreadyVisisted()) {
+                && !nachbar.isAlreadyVisited()) {
             queue.add(nachbar);
             nachbar.setAlreadyVisisted(true);
             map.put(nachbar.getPosition(), parentNode.getPosition());

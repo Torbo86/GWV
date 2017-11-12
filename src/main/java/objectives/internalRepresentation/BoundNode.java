@@ -2,8 +2,11 @@ package objectives.internalRepresentation;
 
 import objectives.Position;
 
-public class BoundNode extends Node{
-    public BoundNode(Position position) {
+/**
+ * Diese Node repräsentiert eine Grenze
+ */
+public class BoundNode extends Node {
+    BoundNode(Position position) {
         super(position);
     }
 

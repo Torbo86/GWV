@@ -12,15 +12,15 @@ public class SearchSpaceService {
 
     private final List<SearchState> searchStateList = new ArrayList<>();
 
-    SearchSpaceService(Labyrinth labyrinth, Position startPosition) {
-        extractSearchStateFromLabyrinth(labyrinth, startPosition); // Das ist unser SearchState-Start
-    }
+//    SearchSpaceService(Labyrinth labyrinth, Position startPosition) {
+//        extractSearchStateFromLabyrinth(labyrinth, startPosition); // Das ist unser SearchState-Start
+//    }
 
     /**
      * This method extract from labyrinth the actual state
      */
     public void extractSearchStateFromLabyrinth(final Labyrinth labyrinth, Position playerPosition) {
-        searchStateList.add(new SearchState(labyrinth.getGoal(), playerPosition, labyrinth.getGraph().getCharArrayFromGraph()));
+        searchStateList.add(new SearchState(labyrinth.getGraph().getGoalNode().getPosition(), playerPosition, labyrinth.getGraph().getCharArrayFromGraph()));
     }
 
     /**
@@ -33,7 +33,4 @@ public class SearchSpaceService {
             i[0]++;
         });
     }
-
-
-
 }

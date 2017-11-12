@@ -2,6 +2,9 @@ package objectives.internalRepresentation;
 
 import objectives.Position;
 
+/**
+ * Diese Node ist eine abstrakte Node
+ */
 public abstract class Node {
 
     private Node northNachbar;
@@ -9,8 +12,8 @@ public abstract class Node {
     private Node southNachbar;
     private Node westNachbar;
     private Position position;
-    private boolean isAlreadyVisisted = false;
-    private boolean isInPath = false;
+    protected boolean isAlreadyVisisted = false;
+    protected boolean isInPath = false;
 
     Node(Position position) {
         this.position = position;
@@ -54,7 +57,7 @@ public abstract class Node {
 
     public abstract boolean isPossible();
 
-    public boolean isAlreadyVisisted() {
+    public boolean isAlreadyVisited() {
         return isAlreadyVisisted;
     }
 
@@ -63,11 +66,11 @@ public abstract class Node {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return getPosition().toString();
     }
 
-    public boolean isInPath() {
+    boolean isInPath() {
         return isInPath;
     }
 
