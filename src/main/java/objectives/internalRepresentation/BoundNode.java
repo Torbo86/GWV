@@ -13,6 +13,6 @@ public class BoundNode extends Node {
     @Override
     public boolean isPossible() {
         return false;
-    }
+    } // Eine Grenze kann natürlich nicht betreten werden
 }
 

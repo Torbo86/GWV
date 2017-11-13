@@ -21,7 +21,7 @@ public abstract class Node {
 
     void setEastNachbar(Node eastNachbar) {
         this.eastNachbar = eastNachbar;
-    }
+    } //Setzen von Nachbarn
 
     void setNorthNachbar(Node northNachbar) {
         this.northNachbar = northNachbar;
@@ -55,11 +55,11 @@ public abstract class Node {
         return westNachbar;
     }
 
-    public abstract boolean isPossible();
+    public abstract boolean isPossible(); //Possible bedeutet, ob diese Node besucht werden kann
 
     public boolean isAlreadyVisited() {
         return isAlreadyVisisted;
-    }
+    } //isAlreadyVisited bedeutet, dass man diese bereits gefunden hat
 
     public void setAlreadyVisisted(boolean alreadyVisisted) {
         isAlreadyVisisted = alreadyVisisted;
@@ -72,7 +72,7 @@ public abstract class Node {
 
     boolean isInPath() {
         return isInPath;
-    }
+    } // InPath bedeutet, dass diese Node für den Weg zum Goal gebraucht wird
 
     public void setInPath(boolean inPath) {
         isInPath = inPath;

@@ -2,10 +2,13 @@ package objectives.internalRepresentation;
 
 import objectives.Position;
 
+/**
+ * Diese Node repräsentiert die Teleportationfähigkeit
+ */
 public class TeleportationNode extends Node {
 
-    private char teleportName;
-    private TeleportationNode teleportNode;
+    private char teleportName; //Das Label der Node
+    private TeleportationNode teleportNode; //die andere TeleportNode
 
     TeleportationNode(Position position, final char teleportName) {
         super(position);
@@ -17,60 +20,59 @@ public class TeleportationNode extends Node {
         return true;
     }
 
-    public void setTeleportNode(Node teleportNode){
-        if(teleportNode instanceof TeleportationNode) {
+    void setTeleportNode(Node teleportNode) {
+        if (teleportNode instanceof TeleportationNode) {
             this.teleportNode = (TeleportationNode) teleportNode;
         }
     }
 
     @Override
-    public Node getNorthNachbar(){
+    public Node getNorthNachbar() {
         return teleportNode.getOwnNorthNachbar();
-    }
+    } //Wir können nur auf die Nachbarn von der TeleportNode zugreifen
 
     @Override
-    public Node getEastNachbar(){
+    public Node getEastNachbar() {
         return teleportNode.getOwnEastNachbar();
     }
 
     @Override
-    public Node getSouthNachbar(){
+    public Node getSouthNachbar() {
         return teleportNode.getOwnSouthNachbar();
     }
 
     @Override
-    public Node getWestNachbar(){
+    public Node getWestNachbar() {
         return teleportNode.getOwnWestNachbar();
     }
 
-    public Node getOwnNorthNachbar(){
+    private Node getOwnNorthNachbar() {
         return super.getNorthNachbar();
-    }
+    } // Hier kann man auf die richtigen Nachbarn zugreifen
 
-    public Node getOwnEastNachbar(){
+    private Node getOwnEastNachbar() {
         return super.getEastNachbar();
     }
 
-
-    public Node getOwnSouthNachbar(){
+    private Node getOwnSouthNachbar() {
         return super.getSouthNachbar();
     }
 
-    public Node getOwnWestNachbar(){
+    private Node getOwnWestNachbar() {
         return super.getWestNachbar();
     }
 
     @Override
-    public boolean isInPath(){
+    public boolean isInPath() {
         return teleportNode.isInPath() && isInPath;
-    }
+    } //IsInPath gilt nur wenn beide Nodes drin sind
 
     @Override
-    public boolean isAlreadyVisited(){
+    public boolean isAlreadyVisited() {
         return teleportNode.isAlreadyVisisted && isAlreadyVisisted;
-    }
+    } // AlreadyVisited wenn beide Nodes gefunden wurden
 
-    public char getTeleportName(){
+    public char getTeleportName() {
         return teleportName;
     }
 }

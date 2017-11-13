@@ -1,4 +1,5 @@
 import Services.BreadthFirstSearch;
+import Services.DepthFirstSearch;
 import Services.LabyrinthFileReader;
 import Services.SearchSpaceService;
 import objectives.Labyrinth;
@@ -20,10 +21,14 @@ public class Main {
     public static void main(String... args) {
         LabyrinthFileReader reader = new LabyrinthFileReader(); // Wir erstellen unsere File
 
-        Labyrinth labyrinth = reader.readLabyrinthFile(new File(SECOND_LABYRINTH)); //Welche Datei soll gelesen werden ?
+        Labyrinth labyrinth = reader.readLabyrinthFile(new File(THIRD_LABYRINTH)); //Welche Datei soll gelesen werden ?
 
-        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(labyrinth); // Wir stellen unser Breitensuchen-Objekt
+//        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(labyrinth); // Wir stellen unser Breitensuchen-Objekt
 
-        List<Node> nodeList = breadthFirstSearch.startSearch(); // Starten die Breitensuche
+        DepthFirstSearch depthFirstSearch = new DepthFirstSearch(labyrinth);
+
+        List<Node> nodeList = depthFirstSearch.startDepthSearch();
+
+//        List<Node> nodeList = breadthFirstSearch.startSearch(); // Starten die Breitensuche
     }
 }

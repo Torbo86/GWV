@@ -19,7 +19,7 @@ public class Graph {
 
     private void createGraphFromCharArray(char[][] charArray) {
         for (int i = 0; i < charArray.length; i++) {
-            for (int j = 0; j < charArray[i].length; j++) {
+            for (int j = 0; j < charArray[i].length; j++) { // Gehe einmal vollständig durch das Array
                 switch (charArray[i][j]) {
                     case 's':
                         startNode = new StartNode(new Position(j, i)); // Erstelle StartNode
@@ -33,48 +33,49 @@ public class Graph {
                         nodeList.add(new BoundNode(new Position(j, i))); // Erstelle BoundNodes wenn eine Grenze da ist
                         break;
                     case ' ':
-                        nodeList.add(new EmptyNode(new Position(j, i))); // Erstelle für den Rest der Chars im Array nur EmptyNode
+                        nodeList.add(new EmptyNode(new Position(j, i))); // Erstelle eine EmptyNode wenn nichts drin ist
                         break;
                     default:
-                        nodeList.add(new TeleportationNode(new Position(j, i), charArray[i][j]));
+                        nodeList.add(new TeleportationNode(new Position(j, i), charArray[i][j])); //Erstelle eine TeleportationNode
                         break;
                 }
             }
         }
 
         enterNachbarn(); // Erstelle jetzt zu jeder Node die Nachbarn
-        setTeleportationBinding();
+        setTeleportationBinding(); //Verbinde die TeleportNodes
     }
 
     private void setTeleportationBinding() {
-        List<Node> teleportationNodes = nodeList.stream().filter(node -> node instanceof TeleportationNode).collect(Collectors.toList());
-        teleportationNodes.forEach(node -> {
+        List<Node> teleportationNodes = nodeList.stream().filter(node -> node instanceof TeleportationNode).collect(Collectors.toList()); // Erstelle eine Liste mit allen TeleportNodes
+
+        teleportationNodes.forEach(node -> { //Für jede node aus der TeleportNodeList
+            // Bekomme eine andere TeleportNode mit dem selben Namen
             Optional<Node> teleportationNode = getTeleportationNodeWithName(((TeleportationNode)node), ((TeleportationNode)node).getTeleportName());
-            teleportationNode.ifPresent(node1 -> {
-                ((TeleportationNode) node).setTeleportNode(node1);
-                ((TeleportationNode) node1).setTeleportNode(node);
+            teleportationNode.ifPresent(node1 -> { // Wenn es solch eine Node gibt dann
+                ((TeleportationNode) node).setTeleportNode(node1); //Setze die bekommene Node mögliche Teleportation
+                ((TeleportationNode) node1).setTeleportNode(node); // Und setze dich selbst als TeleportNode
             });
         });
     }
 
     public char[][] getCharArrayFromGraph() {
-        char[][] charArray = new char[10][20];
-        for (Node node : nodeList) {
-
+        char[][] charArray = new char[10][20]; //Wir kennen die Größe vom Array
+        for (Node node : nodeList) { //Für jede Node erstelle den dazugehörigen char
             if (node instanceof BoundNode) {
-                charArray[node.getPosition().getY()][node.getPosition().getX()] = 'x';
+                charArray[node.getPosition().getY()][node.getPosition().getX()] = 'x'; // BoundNode = x
             } else if (node instanceof EmptyNode) {
                 if (node.isInPath()) {
-                    charArray[node.getPosition().getY()][node.getPosition().getX()] = 'o';
+                    charArray[node.getPosition().getY()][node.getPosition().getX()] = 'o'; //Besuchte EmptyNode = o
                 } else {
-                    charArray[node.getPosition().getY()][node.getPosition().getX()] = ' ';
+                    charArray[node.getPosition().getY()][node.getPosition().getX()] = ' '; //Leere EmptyNode =
                 }
             } else if (node instanceof GoalNode) {
-                charArray[node.getPosition().getY()][node.getPosition().getX()] = 'g';
+                charArray[node.getPosition().getY()][node.getPosition().getX()] = 'g'; //GoalNode = g
             } else if (node instanceof StartNode) {
-                charArray[node.getPosition().getY()][node.getPosition().getX()] = 's';
+                charArray[node.getPosition().getY()][node.getPosition().getX()] = 's'; //StartNode = s
             } else if (node instanceof TeleportationNode){
-                charArray[node.getPosition().getY()][node.getPosition().getX()] = ((TeleportationNode)node).getTeleportName();
+                charArray[node.getPosition().getY()][node.getPosition().getX()] = ((TeleportationNode)node).getTeleportName(); // TeleportNode = TeleportNodeName
             }
         }
         return charArray;
@@ -99,16 +100,15 @@ public class Graph {
      * @return die jeweilige Node oder als Null.
      */
     public Node getNodeAtPosition(Position position) {
-        Optional<Node> nodeAtPosition = nodeList.stream().filter(node -> node.getPosition().equals(position)).findFirst();
+        Optional<Node> nodeAtPosition = nodeList.stream().filter(node -> node.getPosition().equals(position)).findFirst(); //Gehe durch die gesamte Liste
         return nodeAtPosition.orElse(null);
     }
 
-    public Optional<Node> getTeleportationNodeWithName(TeleportationNode teleportnode, char teleportnodeName) {
-        Optional<Node> teleportationNodeWithChar = nodeList.stream().filter(node ->
+    private Optional<Node> getTeleportationNodeWithName(TeleportationNode teleportnode, char teleportnodeName) {
+        //Erstelle eine Liste mit TeleportNodes, dessen Name der selbe ist wie der übergebene und die Position != der übergebenen TeleportNode ist
+        return nodeList.stream().filter(node ->
                 node instanceof TeleportationNode && ((TeleportationNode) node).getTeleportName() == teleportnodeName &&
                         !node.getPosition().equals(teleportnode.getPosition())).findFirst();
-
-        return teleportationNodeWithChar;
     }
 
     /**
