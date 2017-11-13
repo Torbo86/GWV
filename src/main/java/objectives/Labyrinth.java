@@ -2,6 +2,9 @@ package objectives;
 
 import objectives.internalRepresentation.Graph;
 
+/**
+ * Das Labyrinth selbst
+ */
 public class Labyrinth {
     private Graph graph;
 

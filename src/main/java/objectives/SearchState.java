@@ -1,11 +1,20 @@
 package objectives;
 
+/**
+ * Diese Klasse repräsentiert ein Searchstate
+ */
 public class SearchState {
 
     private Position goalPosition;
     private Position playerPosition;
     private char[][] playGround;
 
+    /**
+     * Der Konstruktor für einen Searchstate
+     * @param goalPosition Die Zielposition
+     * @param playerPosition Wo ist gerade der Roboter/Player
+     * @param playGround Das dazugehörige Spielfeld
+     */
     public SearchState(final Position goalPosition, final Position playerPosition, final char[][] playGround) {
         this.goalPosition = goalPosition;
         this.playerPosition = playerPosition;
@@ -28,6 +37,3 @@ public class SearchState {
                 ", PlayerY: " + playerPosition.getY()) + ")/n" + builder.toString();
     }
 }
-
-
-//(xG,yG,xS,yS) -> Target: (x,y,x,y)

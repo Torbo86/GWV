@@ -25,10 +25,14 @@ public class Main {
 
 //        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(labyrinth); // Wir stellen unser Breitensuchen-Objekt
 
+//               List<Node> nodeList = breadthFirstSearch.startSearch(); // Starten die Breitensuche
+
         DepthFirstSearch depthFirstSearch = new DepthFirstSearch(labyrinth);
 
         List<Node> nodeList = depthFirstSearch.startDepthSearch();
 
-//        List<Node> nodeList = breadthFirstSearch.startSearch(); // Starten die Breitensuche
+        if(nodeList.isEmpty()){
+            System.out.println("Es wurde kein Weg gefunden");
+        }
     }
 }

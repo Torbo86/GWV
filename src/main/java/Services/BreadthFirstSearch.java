@@ -7,10 +7,13 @@ import objectives.internalRepresentation.Node;
 
 import java.util.*;
 
+/**
+ * Dies hier ist die Breitensuche
+ */
 public class BreadthFirstSearch {
 
-    private Labyrinth labyrinth;
-    private SearchSpaceService searchSpaceService;
+    private Labyrinth labyrinth; // Das Labyrinth dazu
+    private SearchSpaceService searchSpaceService; // Ein Service der unsere SearchStates besitzt
 
     public BreadthFirstSearch(final Labyrinth labyrinth) {
         this.labyrinth = labyrinth; //Setzen uns unser Labyrinth
@@ -32,7 +35,7 @@ public class BreadthFirstSearch {
 
             if (parentNode instanceof GoalNode) { // Wenn wir das Goal haben
                 searchSpaceService.printAllSearchStates(); // Dann printe alle Searchstates
-                labyrinth.getGraph().resetAllNodes();
+                labyrinth.getGraph().resetAllNodes(); //Wir resetten einmal den Graphen um einen neuen zu basteln, wo nur der Weg eingezeichnet ist
                 return constructPath(path, parentNode); // Und gebe den konstruierten Path zurück
             }
 
@@ -42,25 +45,34 @@ public class BreadthFirstSearch {
             addNodeToQueue(queue, parentNode.getSouthNachbar(), path, parentNode);
 
             parentNode.setInPath(true); // Bereits abgearbeitet
-//            if (queue.size() != queueSize) { // Wenn sich die Queuesize geändert hat, haben wir einen neuen State erreicht der uns auch was bringt.
-            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition());
-//            }
+
+            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition()); //Erstellen uns ein Searchstate von dem jetzigen State
+
         }
-        searchSpaceService.printAllSearchStates();
-        return Collections.emptyList();
+        searchSpaceService.printAllSearchStates(); // Am Ende printe alle States
+        return Collections.emptyList(); // und returne eine leere Liste, da man nicht zum Goal kam
     }
 
+    /**
+     * Diese Methode konstruiert uns den Weg zum Ziel
+     *
+     * @param path     Das Dictionary mit allen Verbindungen die genommen wurden
+     * @param goalNode Das Ziel
+     * @return eine sortierte Liste mit dem Weg bis zum Ziel
+     */
     private List<Node> constructPath(Map<Position, Position> path, Node goalNode) {
         List<Node> nodeList = new ArrayList<>();
         while (goalNode != null) {
             goalNode.setInPath(true);
-            nodeList.add(goalNode);
+            nodeList.add(goalNode); //Fügen die GoalNode hinzu
             goalNode = labyrinth.getGraph().getNodeAtPosition(path.get(goalNode.getPosition()));
+            // Setzen für jede Node auf True, wenn dieser auf dem Weg liegt. Und aus der Map können wir sehen, welche Verbindungen genommen wurden
         }
-        System.out.println(nodeList);
+        System.out.println("Folgender Weg wurde genommen (reversed): \n" + nodeList); // Printe die List aus
         searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGraph().getGoalNode().getPosition());
+        System.out.println("Und so sieht der Weg aus: \n");
         searchSpaceService.printAllSearchStates();
-        return nodeList;
+        return nodeList; // Wir erstellen ein SearchState der nochmal angibt, welchen Weg man genommen hat.
     }
 
     /**

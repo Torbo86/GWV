@@ -72,7 +72,7 @@ public class TeleportationNode extends Node {
         return teleportNode.isAlreadyVisisted && isAlreadyVisisted;
     } // AlreadyVisited wenn beide Nodes gefunden wurden
 
-    public char getTeleportName() {
+    char getTeleportName() {
         return teleportName;
     }
 }
