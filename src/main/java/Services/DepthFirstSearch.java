@@ -54,6 +54,7 @@ public class DepthFirstSearch {
      * @param goalNode   Der Zielknoten
      * @return eine Liste mit Nodes, die den Weg repräsentieren
      */
+
     private List<Node> constructPath(Map<Position, Position> dictionary, Node goalNode) {
         List<Node> nodeList = new ArrayList<>();
         while (goalNode != null) {
@@ -63,6 +64,7 @@ public class DepthFirstSearch {
             //Gehe vom GoalNode immer weiter nach oben und finde so den Weg raus. Im Dicitionary sind alle genommenen
             //Verbindungen drin
         }
+
         System.out.println("Folgender Weg wurde genommen (reversed): \n" + nodeList); // Printe die List aus
         searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGraph().getGoalNode().getPosition());
         System.out.println("Und so sieht der Weg aus: \n");
