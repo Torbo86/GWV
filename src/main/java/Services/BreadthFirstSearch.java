@@ -20,7 +20,7 @@ public class BreadthFirstSearch {
         searchSpaceService = new SearchSpaceService();
     }
 
-    public List<Node> startSearch() {
+    public List<Node> startBreadthSearch() {
         final Queue<Node> queue = new LinkedList<>(); // Erstellen eine Queue für die Breitensuche
         final Map<Position, Position> path = new HashMap<>(); // Erstellen eine Map um später den Weg zu bekommen
 
@@ -96,5 +96,4 @@ public class BreadthFirstSearch {
             map.put(nachbar.getPosition(), parentNode.getPosition());
         }
     }
-
 }

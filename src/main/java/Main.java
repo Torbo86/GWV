@@ -26,8 +26,7 @@ public class Main {
         Labyrinth labyrinth = reader.readLabyrinthFile(new File(THIRD_LABYRINTH)); //Welche Datei soll gelesen werden ?
 
 //        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(labyrinth); // Wir stellen unser Breitensuchen-Objekt
-
-//               List<Node> nodeList = breadthFirstSearch.startSearch(); // Starten die Breitensuche
+//        List<Node> nodeList = breadthFirstSearch.startSearch(); // Starten die Breitensuche
 
         DepthFirstSearch depthFirstSearch = new DepthFirstSearch(labyrinth);
 
