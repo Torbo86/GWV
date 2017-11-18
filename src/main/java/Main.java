@@ -1,7 +1,4 @@
-import Services.BreadthFirstSearch;
-import Services.DepthFirstSearch;
-import Services.LabyrinthFileReader;
-import Services.SearchSpaceService;
+import Services.*;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import objectives.Labyrinth;
 import objectives.internalRepresentation.Node;
@@ -28,9 +25,13 @@ public class Main {
 //        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(labyrinth); // Wir stellen unser Breitensuchen-Objekt
 //        List<Node> nodeList = breadthFirstSearch.startSearch(); // Starten die Breitensuche
 
-        DepthFirstSearch depthFirstSearch = new DepthFirstSearch(labyrinth);
+//        DepthFirstSearch depthFirstSearch = new DepthFirstSearch(labyrinth);
+//
+//        List<Node> nodeList = depthFirstSearch.startDepthSearch();
 
-        List<Node> nodeList = depthFirstSearch.startDepthSearch();
+        HeuristicSearch heuristicSearch = new HeuristicSearch(labyrinth);
+
+        List<Node> nodeList = heuristicSearch.startSearch();
 
         if (nodeList.isEmpty()) {
             System.out.println("Es wurde kein Weg gefunden");
