@@ -84,7 +84,8 @@ public class AStarSearch
         return bestNode;
     }
 
-    private Node getBestNode(List<Node> nodeList) {
+    private Node getBestNode(List<Node> nodeList)
+    {
         Node bestNode = null;
         double bestNodeDistance = Double.MAX_VALUE;
 
@@ -122,7 +123,8 @@ public class AStarSearch
         return bestNode;
     }
 
-    private double getEuclideanDistance(Node node, Node node2) {
+    private double getEuclideanDistance(Node node, Node node2)
+    {
         double ycoord = Math.abs (node.getPosition().getY() - node2.getPosition().getY());
         double xcoord = Math.abs (node.getPosition().getX() - node2.getPosition().getX());
         return Math.sqrt((ycoord)*(ycoord) +(xcoord)*(xcoord));

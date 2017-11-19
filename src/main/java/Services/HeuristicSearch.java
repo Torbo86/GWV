@@ -99,27 +99,88 @@ public class HeuristicSearch
     }
 
     /**
-     *
-     private void bestDistance ()
-     {
-     bestNode = null;
-     bestDistance = max int;
 
-     for (Node node: List)
+     private Node getBestNodeWithMoreGoalNodes(List<Node> nodeList)
      {
-     int distance: „rechnung node“
-     }
-     if (distance < bestDistance)
+     Node bestNode = null;
+     double bestNodeDistance = Double.MAX_VALUE;
+
+     for(Node node : nodeList){
+     double distance = Double.MAX_VALUE;
+
+     for(Node goalNode : labyrinth.getGraph().getGoalNodeList())
      {
-     bestDistance = distance
-     bestNode = node
+     double goalDistance = getEuclideanDistance(node, goalNode);
+     for (TeleportationNode teleportationNode : labyrinth.getGraph().getTeleportationNodes())
+     {
+     double distanceWithTeleporters = getEuclideanDistance(node, teleportationNode) + getEuclideanDistance(teleportationNode.getTeleportNode(), goalNode);
+     if (distanceWithTeleporters < goalDistance)
+     {
+     goalDistance = distanceWithTeleporters;
      }
      }
 
-     Für 2 Punkte P1:= (xy/y1) und P2 := (xy/y2)
-     ist der Abstand d definiert als:
+     if(goalDistance < distance)
+     {
+     distance = goalDistance;
+     }
+     }
 
-     d := sqrt[(x2 - x1)^2 + (y2 - y2)^2]
+     if (distance < bestNodeDistance)
+     {
+     bestNode = node;
+     bestNodeDistance = distance;
+     }
+     }
+     return bestNode;
+     }
+
+     private Node getBestNode(List<Node> nodeList)
+     {
+     Node bestNode = null;
+     double bestNodeDistance = Double.MAX_VALUE;
+
+     for(Node node : nodeList){
+     double distance = getEuclideanDistance(node, labyrinth.getGraph().getGoalNode());
+
+     if(distance < bestNodeDistance)
+     {
+     bestNode = node;
+     bestNodeDistance = distance;
+     }
+     }
+     return bestNode;
+     }
+
+     private Node getBestNodeWithPortals(List<Node> nodeList){
+     Node bestNode = null;
+     double bestNodeDistance = Double.MAX_VALUE;
+
+     for(Node node : nodeList){
+     double distance = getEuclideanDistance(node, labyrinth.getGraph().getGoalNode());
+
+     for(TeleportationNode teleportationNode : labyrinth.getGraph().getTeleportationNodes()){
+     double distanceWithTeleporters = getEuclideanDistance(node, teleportationNode) + getEuclideanDistance(teleportationNode.getTeleportNode(), labyrinth.getGraph().getGoalNode());
+
+     if(distanceWithTeleporters < distance){
+     distance = distanceWithTeleporters;
+     }
+     }
+
+     if(distance < bestNodeDistance){
+     bestNode = node;
+     bestNodeDistance = distance;
+     }
+     }
+     return bestNode;
+     }
+
+     private double getEuclideanDistance(Node node, Node node2)
+     {
+     double ycoord = Math.abs (node.getPosition().getY() - node2.getPosition().getY());
+     double xcoord = Math.abs (node.getPosition().getX() - node2.getPosition().getX());
+     return Math.sqrt((ycoord)*(ycoord) +(xcoord)*(xcoord));
+     }
 
      */
 }
