@@ -86,13 +86,40 @@ public class HeuristicSearch
      * @param map        Die Map mit den Wegen
      * @param parentNode Der ParentNode
      */
-    private void addNodeToQueue(Queue<Node> queue, Node nachbar, Map<Position, Position> map, Node parentNode) {
+    private void addNodeToQueue(Queue<Node> queue, Node nachbar, Map<Position, Position> map, Node parentNode)
+    {
         if (nachbar != null
                 && nachbar.isPossible()
-                && !nachbar.isAlreadyVisited()) {
+                && !nachbar.isAlreadyVisited())
+        {
             queue.add(nachbar);
             nachbar.setAlreadyVisisted(true);
             map.put(nachbar.getPosition(), parentNode.getPosition());
         }
     }
+
+    /**
+     *
+     private void bestDistance ()
+     {
+     bestNode = null;
+     bestDistance = max int;
+
+     for (Node node: List)
+     {
+     int distance: „rechnung node“
+     }
+     if (distance < bestDistance)
+     {
+     bestDistance = distance
+     bestNode = node
+     }
+     }
+
+     Für 2 Punkte P1:= (xy/y1) und P2 := (xy/y2)
+     ist der Abstand d definiert als:
+
+     d := sqrt[(x2 - x1)^2 + (y2 - y2)^2]
+
+     */
 }
