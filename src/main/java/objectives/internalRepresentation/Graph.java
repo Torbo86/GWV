@@ -11,7 +11,9 @@ public class Graph {
 
     private final List<Node> nodeList = new ArrayList<>(); // Liste mit alle Nodes
     private Node goalNode; // Das Ziel
+    private List<Node> goalNodeList = new ArrayList<>();
     private Node startNode; // Der Start
+    private List<TeleportationNode> teleportationNodes = new ArrayList<>();
 
     public Graph(char[][] charArray) {
         createGraphFromCharArray(charArray);
@@ -28,6 +30,7 @@ public class Graph {
                     case 'g':
                         goalNode = new GoalNode(new Position(j, i)); // Erstelle GoalNode
                         nodeList.add(goalNode);
+                        goalNodeList.add(goalNode);
                         break;
                     case 'x':
                         nodeList.add(new BoundNode(new Position(j, i))); // Erstelle BoundNodes wenn eine Grenze da ist
@@ -36,7 +39,9 @@ public class Graph {
                         nodeList.add(new EmptyNode(new Position(j, i))); // Erstelle eine EmptyNode wenn nichts drin ist
                         break;
                     default:
-                        nodeList.add(new TeleportationNode(new Position(j, i), charArray[i][j])); //Erstelle eine TeleportationNode
+                        TeleportationNode teleportationNode = new TeleportationNode(new Position(j, i), charArray[i][j]);
+                        nodeList.add(teleportationNode); //Erstelle eine TeleportationNode
+                        teleportationNodes.add(teleportationNode);
                         break;
                 }
             }
@@ -57,6 +62,10 @@ public class Graph {
                 ((TeleportationNode) node1).setTeleportNode(node); // Und setze dich selbst als TeleportNode
             });
         });
+    }
+
+    public List<Node> getGoalNodeList() {
+        return goalNodeList;
     }
 
     public char[][] getCharArrayFromGraph() {
@@ -133,5 +142,9 @@ public class Graph {
             node.setInPath(false);
             node.setAlreadyVisisted(false);
         });
+    }
+
+    public List<TeleportationNode> getTeleportationNodes(){
+        return teleportationNodes;
     }
 }

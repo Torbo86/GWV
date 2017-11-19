@@ -45,7 +45,7 @@ public class HeuristicSearch
 
             parentNode.setInPath(true); // Bereits abgearbeitet
 
-            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition()); //Erstellen uns ein Searchstate von dem jetzigen State
+            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition(), queue.size()); //Erstellen uns ein Searchstate von dem jetzigen State
 
         }
         searchSpaceService.printAllSearchStates(); // Am Ende printe alle States
@@ -68,7 +68,7 @@ public class HeuristicSearch
             // Setzen für jede Node auf True, wenn dieser auf dem Weg liegt. Und aus der Map können wir sehen, welche Verbindungen genommen wurden
         }
         System.out.println("Folgender Weg wurde genommen (reversed): \n" + nodeList); // Printe die List aus
-        searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGraph().getGoalNode().getPosition());
+        searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGraph().getGoalNode().getPosition(), 0);
         System.out.println("Und so sieht der Weg aus: \n");
         searchSpaceService.printAllSearchStates();
         return nodeList; // Wir erstellen ein SearchState der nochmal angibt, welchen Weg man genommen hat.

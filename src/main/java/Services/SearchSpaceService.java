@@ -19,8 +19,8 @@ public class SearchSpaceService {
     /**
      * This method extract from labyrinth the actual state
      */
-    public void extractSearchStateFromLabyrinth(final Labyrinth labyrinth, Position playerPosition) {
-        searchStateList.add(new SearchState(labyrinth.getGraph().getGoalNode().getPosition(), playerPosition, labyrinth.getGraph().getCharArrayFromGraph()));
+    public void extractSearchStateFromLabyrinth(final Labyrinth labyrinth, Position playerPosition, final int frontierSize) {
+        searchStateList.add(new SearchState(labyrinth.getGraph().getGoalNode().getPosition(), playerPosition, labyrinth.getGraph().getCharArrayFromGraph(), frontierSize));
     }
 
     /**

@@ -75,4 +75,8 @@ public class TeleportationNode extends Node {
     char getTeleportName() {
         return teleportName;
     }
+
+    public TeleportationNode getTeleportNode() {
+        return teleportNode;
+    }
 }

@@ -8,6 +8,7 @@ public class SearchState {
     private Position goalPosition;
     private Position playerPosition;
     private char[][] playGround;
+    private int frontierSize;
 
     /**
      * Der Konstruktor für einen Searchstate
@@ -15,10 +16,11 @@ public class SearchState {
      * @param playerPosition Wo ist gerade der Roboter/Player
      * @param playGround Das dazugehörige Spielfeld
      */
-    public SearchState(final Position goalPosition, final Position playerPosition, final char[][] playGround) {
+    public SearchState(final Position goalPosition, final Position playerPosition, final char[][] playGround, final int frontierSize) {
         this.goalPosition = goalPosition;
         this.playerPosition = playerPosition;
         this.playGround = playGround;
+        this.frontierSize = frontierSize;
     }
 
     @Override
@@ -34,6 +36,6 @@ public class SearchState {
         return new String("(GoalX: " + goalPosition.getX() +
                 ", GoalY: " + goalPosition.getY() +
                 ", PlayerX: " + playerPosition.getX() +
-                ", PlayerY: " + playerPosition.getY()) + ")/n" + builder.toString();
+                ", PlayerY: " + playerPosition.getY()) + ") Frontiersize: "+ frontierSize +"\n" + builder.toString();
     }
 }

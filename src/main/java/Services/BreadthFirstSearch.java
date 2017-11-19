@@ -31,12 +31,10 @@ public class BreadthFirstSearch {
         while (!queue.isEmpty()) { // Mache solange, bis die Queue leer ist
             Node parentNode = queue.remove(); // Entferne das erste Element aus der Queue
 
-            int queueSize = queue.size(); // Wir merken uns die Queuesize, damit wir nicht unnötig viele Searchstates haben
-
             if (parentNode instanceof GoalNode) { // Wenn wir das Goal haben
                 searchSpaceService.printAllSearchStates(); // Dann printe alle Searchstates
                 labyrinth.getGraph().resetAllNodes(); //Wir resetten einmal den Graphen um einen neuen zu basteln, wo nur der Weg eingezeichnet ist
-                return constructPath(path, parentNode); // Und gebe den konstruierten Path zurück
+                constructPath(path, parentNode); // Und gebe den konstruierten Path zurück
             }
 
             addNodeToQueue(queue, parentNode.getNorthNachbar(), path, parentNode); // Fügen alle möglichen Nachbarn hinzu
@@ -44,9 +42,11 @@ public class BreadthFirstSearch {
             addNodeToQueue(queue, parentNode.getWestNachbar(), path, parentNode);
             addNodeToQueue(queue, parentNode.getSouthNachbar(), path, parentNode);
 
-            parentNode.setInPath(true); // Bereits abgearbeitet
+            if(!(parentNode instanceof GoalNode)) {
+                parentNode.setInPath(true); // Bereits abgearbeitet
+            }
 
-            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition()); //Erstellen uns ein Searchstate von dem jetzigen State
+            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition(), queue.size()); //Erstellen uns ein Searchstate von dem jetzigen State
 
         }
         searchSpaceService.printAllSearchStates(); // Am Ende printe alle States
@@ -69,7 +69,7 @@ public class BreadthFirstSearch {
             // Setzen für jede Node auf True, wenn dieser auf dem Weg liegt. Und aus der Map können wir sehen, welche Verbindungen genommen wurden
         }
         System.out.println("Folgender Weg wurde genommen (reversed): \n" + nodeList); // Printe die List aus
-        searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGraph().getGoalNode().getPosition());
+        searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGraph().getGoalNode().getPosition(), 0);
         System.out.println("Und so sieht der Weg aus: \n");
         searchSpaceService.printAllSearchStates();
         return nodeList; // Wir erstellen ein SearchState der nochmal angibt, welchen Weg man genommen hat.

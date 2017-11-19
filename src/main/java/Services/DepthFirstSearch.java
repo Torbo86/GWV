@@ -41,7 +41,7 @@ public class DepthFirstSearch {
 
             node.setInPath(true); //Die Node wurde vollkommen abgearbeitet
 
-            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, node.getPosition()); //Erstelle ein SearchState
+            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, node.getPosition(), stack.size()); //Erstelle ein SearchState
         }
         searchSpaceService.printAllSearchStates(); // Auch wenn kein Ziel gefunden wurde, zeige alle SearchStates
         return Collections.emptyList(); //Gebe eine leere Liste zurück
@@ -66,7 +66,7 @@ public class DepthFirstSearch {
         }
 
         System.out.println("Folgender Weg wurde genommen (reversed): \n" + nodeList); // Printe die List aus
-        searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGraph().getGoalNode().getPosition());
+        searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, labyrinth.getGraph().getGoalNode().getPosition(), 0);
         System.out.println("Und so sieht der Weg aus: \n");
         searchSpaceService.printAllSearchStates();
         return nodeList; // Wir erstellen ein SearchState der nochmal angibt, welchen Weg man genommen hat.

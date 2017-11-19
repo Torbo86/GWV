@@ -29,9 +29,12 @@ public class Main {
 //
 //        List<Node> nodeList = depthFirstSearch.startDepthSearch();
 
-        HeuristicSearch heuristicSearch = new HeuristicSearch(labyrinth);
+//        HeuristicSearch heuristicSearch = new HeuristicSearch(labyrinth);
+//
+//        List<Node> nodeList = heuristicSearch.startSearch();
 
-        List<Node> nodeList = heuristicSearch.startSearch();
+        AStarSearch aStarSearch = new AStarSearch(labyrinth);
+        List<Node> nodeList = aStarSearch.startSearch();
 
         if (nodeList.isEmpty()) {
             System.out.println("Es wurde kein Weg gefunden");
