@@ -98,7 +98,8 @@ public class AStarSearch
     /**
      * Diese methode ermittelt den besten Knoten in deiner Frontier ohne TeleportNodes und nur einem Zielknoten
      */
-    private Node getBestNode(List<Node> nodeList) {
+    private Node getBestNode(List<Node> nodeList)
+    {
         Node bestNode = null;
         double bestNodeDistance = Double.MAX_VALUE;
 
@@ -142,7 +143,8 @@ public class AStarSearch
     /**
      * Diese Methode berechnte die euklidische Distanz
      */
-    private double getEuclideanDistance(Node node, Node node2) {
+    private double getEuclideanDistance(Node node, Node node2)
+    {
         double ycoord = Math.abs (node.getPosition().getY() - node2.getPosition().getY());
         double xcoord = Math.abs (node.getPosition().getX() - node2.getPosition().getX());
         return Math.sqrt((ycoord)*(ycoord) +(xcoord)*(xcoord));
