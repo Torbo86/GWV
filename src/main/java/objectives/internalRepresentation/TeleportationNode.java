@@ -8,7 +8,7 @@ import objectives.Position;
 public class TeleportationNode extends Node {
 
     private char teleportName; //Das Label der Node
-    private TeleportationNode teleportNode; //die andere TeleportNode
+    private TeleportationNode connectedTeleportNode; //die andere TeleportNode
 
     TeleportationNode(Position position, final char teleportName) {
         super(position);
@@ -20,30 +20,30 @@ public class TeleportationNode extends Node {
         return true;
     }
 
-    void setTeleportNode(Node teleportNode) {
-        if (teleportNode instanceof TeleportationNode) {
-            this.teleportNode = (TeleportationNode) teleportNode;
+    void setConnectedTeleportNode(Node connectedTeleportNode) {
+        if (connectedTeleportNode instanceof TeleportationNode) {
+            this.connectedTeleportNode = (TeleportationNode) connectedTeleportNode;
         }
     }
 
     @Override
     public Node getNorthNachbar() {
-        return teleportNode.getOwnNorthNachbar();
+        return connectedTeleportNode.getOwnNorthNachbar();
     } //Wir können nur auf die Nachbarn von der TeleportNode zugreifen
 
     @Override
     public Node getEastNachbar() {
-        return teleportNode.getOwnEastNachbar();
+        return connectedTeleportNode.getOwnEastNachbar();
     }
 
     @Override
     public Node getSouthNachbar() {
-        return teleportNode.getOwnSouthNachbar();
+        return connectedTeleportNode.getOwnSouthNachbar();
     }
 
     @Override
     public Node getWestNachbar() {
-        return teleportNode.getOwnWestNachbar();
+        return connectedTeleportNode.getOwnWestNachbar();
     }
 
     private Node getOwnNorthNachbar() {
@@ -64,19 +64,22 @@ public class TeleportationNode extends Node {
 
     @Override
     public boolean isInPath() {
-        return teleportNode.isInPath() && isInPath;
+        return connectedTeleportNode.isInPath() && isInPath;
     } //IsInPath gilt nur wenn beide Nodes drin sind
 
     @Override
     public boolean isAlreadyVisited() {
-        return teleportNode.isAlreadyVisisted && isAlreadyVisisted;
+        return connectedTeleportNode.isAlreadyVisisted && isAlreadyVisisted;
     } // AlreadyVisited wenn beide Nodes gefunden wurden
 
     char getTeleportName() {
         return teleportName;
     }
 
-    public TeleportationNode getTeleportNode() {
-        return teleportNode;
+    /**
+     * Gibt die andere verbundene Node zurück
+     */
+    public TeleportationNode getConnectedTeleportNode() {
+        return connectedTeleportNode;
     }
 }

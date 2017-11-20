@@ -3,7 +3,7 @@ package objectives;
 import objectives.internalRepresentation.Graph;
 
 /**
- * Das Labyrinth selbst
+ * Das Labyrinth selbst (Kann weggeschmissen werden grundsätzlich)
  */
 public class Labyrinth {
     private Graph graph;

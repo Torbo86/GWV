@@ -20,70 +20,84 @@ public class AStarSearch
         this.searchSpaceService = new SearchSpaceService();
     }
 
-    public List<Node> startSearch(){
-        final List<Node> nodeList = new ArrayList<>();
+    public List<Node> startSearch(final int searchMode){
+        final List<Node> frontierList = new ArrayList<>();
         final Map<Position, Position> path = new HashMap<>();
 
-        nodeList.add(labyrinth.getGraph().getStartNode()); // Wir fügen die erste Node hinein (StartNode)
-        nodeList.get(0).setAlreadyVisisted(true); // Die Startnode haben wir damit bereits besucht
-        nodeList.get(0).setInPath(true); // Haben wir bereits abgearbeitet
+        frontierList.add(labyrinth.getGraph().getStartNode()); // Wir fügen die erste Node hinein (StartNode)
+        frontierList.get(0).setAlreadyVisisted(true); // Die Startnode haben wir damit bereits besucht
 
-        while (!nodeList.isEmpty()) { // Mache solange, bis die Queue leer ist
-            Node parentNode = getBestNodeWithMoreGoalNodes(nodeList);// Entferne das erste Element aus der Queue
-            nodeList.remove(parentNode);
+        while (!frontierList.isEmpty()) { // Mache solange, bis die Liste leer ist
+            Node parentNode;
+
+            if(searchMode == 0){ // Auswahl welcher Strategie
+                parentNode = getBestNode(frontierList);
+            } else if(searchMode == 1){
+                parentNode = getBestNodeWithPortals(frontierList);
+            } else {
+                parentNode = getBestNodeWithMoreGoalNodes(frontierList);
+            }
+            frontierList.remove(parentNode); // Entferne den genommenen Knoten aus der Frontier
 
             if (parentNode instanceof GoalNode) { // Wenn wir das Goal haben
-                searchSpaceService.printAllSearchStates(); // Dann printe alle Searchstates
                 labyrinth.getGraph().resetAllNodes(); //Wir resetten einmal den Graphen um einen neuen zu basteln, wo nur der Weg eingezeichnet ist
                 return constructPath(path, parentNode); // Und gebe den konstruierten Path zurück
             }
 
-            addNodeToList(nodeList, parentNode.getNorthNachbar(), path, parentNode); // Fügen alle möglichen Nachbarn hinzu
-            addNodeToList(nodeList, parentNode.getEastNachbar(), path, parentNode);
-            addNodeToList(nodeList, parentNode.getWestNachbar(), path, parentNode);
-            addNodeToList(nodeList, parentNode.getSouthNachbar(), path, parentNode);
+            addNodeToList(frontierList, parentNode.getNorthNachbar(), path, parentNode); // Fügen alle möglichen Nachbarn hinzu
+            addNodeToList(frontierList, parentNode.getEastNachbar(), path, parentNode);
+            addNodeToList(frontierList, parentNode.getWestNachbar(), path, parentNode);
+            addNodeToList(frontierList, parentNode.getSouthNachbar(), path, parentNode);
 
             parentNode.setInPath(true); // Bereits abgearbeitet
 
-            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition(), nodeList.size()); //Erstellen uns ein Searchstate von dem jetzigen State
+            searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition(), frontierList.size()); //Erstellen uns ein Searchstate von dem jetzigen State
 
         }
         searchSpaceService.printAllSearchStates(); // Am Ende printe alle States
         return Collections.emptyList(); // und returne eine leere Liste, da man nicht zum Goal kam
     }
 
-    private Node getBestNodeWithMoreGoalNodes(List<Node> nodeList){
+    /**
+     * Diese Methode gibt dir den besten Node raus, wenn es mehrere Goals gibt (Mit Teleportknoten möglich !)
+     * @param frontiertList Die Frontier
+     * @return den besten Knoten
+     */
+    private Node getBestNodeWithMoreGoalNodes(List<Node> frontiertList){
         Node bestNode = null;
-        double bestNodeDistance = Double.MAX_VALUE;
+        double bestNodeDistance = Double.MAX_VALUE; // Max value weil wir den zum vergleich ziemlich groß haben müssen anfangs
 
-        for(Node node : nodeList){
+        for(Node node : frontiertList){ // Für jeden Knoten in meiner Frontier
             double distance = Double.MAX_VALUE;
 
-            for(Node goalNode : labyrinth.getGraph().getGoalNodeList()) {
+            for(Node goalNode : labyrinth.getGraph().getGoalNodeList()) { // Und für jeden Zielknoten
 
-                double goalDistance = getEuclideanDistance(node, goalNode);
+                double goalDistance = getEuclideanDistance(node, goalNode); // Berechne die Distanz zwischen node und goalNode
 
-                for (TeleportationNode teleportationNode : labyrinth.getGraph().getTeleportationNodes()) {
-                    double distanceWithTeleporters = getEuclideanDistance(node, teleportationNode) + getEuclideanDistance(teleportationNode.getTeleportNode(), goalNode);
+                for (TeleportationNode teleportationNode : labyrinth.getGraph().getTeleportationNodes()) { // und auch die Distanzen mit TeleportNodes zu den jeweiligen Goals
+                    double distanceWithTeleporters = getEuclideanDistance(node, teleportationNode) + getEuclideanDistance(teleportationNode.getConnectedTeleportNode(), goalNode);
 
-                    if (distanceWithTeleporters < goalDistance) {
-                        goalDistance = distanceWithTeleporters;
+                    if (distanceWithTeleporters < goalDistance) { // Wenn ein Weg mit dem Teleporter besser ist,
+                        goalDistance = distanceWithTeleporters; // setze diesen
                     }
                 }
 
-                if(goalDistance < distance) {
+                if(goalDistance < distance) { // Wenn der Weg für den Zielknoten kleine ist, als die mom. Distanz, nehme den
                     distance = goalDistance;
                 }
             }
 
-                if (distance < bestNodeDistance) {
-                    bestNode = node;
+                if (distance < bestNodeDistance) { // Wenn der Knoten eine kleinere Distanz halt, als die momentane beste Distanz
+                    bestNode = node; // nehme den
                     bestNodeDistance = distance;
                 }
             }
         return bestNode;
     }
 
+    /**
+     * Diese methode ermittelt den besten Knoten in deiner Frontier ohne TeleportNodes und nur einem Zielknoten
+     */
     private Node getBestNode(List<Node> nodeList) {
         Node bestNode = null;
         double bestNodeDistance = Double.MAX_VALUE;
@@ -99,6 +113,9 @@ public class AStarSearch
         return bestNode;
     }
 
+    /**
+     * Diese Methode ermittelt den besten Knoten mit TeleportNodes und einem Zielknoten
+     */
     private Node getBestNodeWithPortals(List<Node> nodeList){
         Node bestNode = null;
         double bestNodeDistance = Double.MAX_VALUE;
@@ -107,7 +124,7 @@ public class AStarSearch
             double distance = getEuclideanDistance(node, labyrinth.getGraph().getGoalNode());
 
             for(TeleportationNode teleportationNode : labyrinth.getGraph().getTeleportationNodes()){
-                double distanceWithTeleporters = getEuclideanDistance(node, teleportationNode) + getEuclideanDistance(teleportationNode.getTeleportNode(), labyrinth.getGraph().getGoalNode());
+                double distanceWithTeleporters = getEuclideanDistance(node, teleportationNode) + getEuclideanDistance(teleportationNode.getConnectedTeleportNode(), labyrinth.getGraph().getGoalNode());
 
                 if(distanceWithTeleporters < distance){
                     distance = distanceWithTeleporters;
@@ -122,6 +139,9 @@ public class AStarSearch
         return bestNode;
     }
 
+    /**
+     * Diese Methode berechnte die euklidische Distanz
+     */
     private double getEuclideanDistance(Node node, Node node2) {
         double ycoord = Math.abs (node.getPosition().getY() - node2.getPosition().getY());
         double xcoord = Math.abs (node.getPosition().getX() - node2.getPosition().getX());

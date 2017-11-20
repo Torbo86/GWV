@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 public class Graph {
 
     private final List<Node> nodeList = new ArrayList<>(); // Liste mit alle Nodes
-    private Node goalNode; // Das Ziel
-    private List<Node> goalNodeList = new ArrayList<>();
+    private Node goalNode; // Das Ziel / Sollte nicht genutzt wenn mehrere Goals das sind
+    private List<Node> goalNodeList = new ArrayList<>(); // Liste mit alle GoalNodes, wenn mehrere vorhanden sind
     private Node startNode; // Der Start
     private List<TeleportationNode> teleportationNodes = new ArrayList<>();
 
@@ -29,8 +29,8 @@ public class Graph {
                         break;
                     case 'g':
                         goalNode = new GoalNode(new Position(j, i)); // Erstelle GoalNode
-                        nodeList.add(goalNode);
-                        goalNodeList.add(goalNode);
+                        nodeList.add(goalNode); // Fuege sie der NodeList hinzu
+                        goalNodeList.add(goalNode); //Fuege sich der GoalNodeListe hinzu
                         break;
                     case 'x':
                         nodeList.add(new BoundNode(new Position(j, i))); // Erstelle BoundNodes wenn eine Grenze da ist
@@ -39,9 +39,9 @@ public class Graph {
                         nodeList.add(new EmptyNode(new Position(j, i))); // Erstelle eine EmptyNode wenn nichts drin ist
                         break;
                     default:
-                        TeleportationNode teleportationNode = new TeleportationNode(new Position(j, i), charArray[i][j]);
-                        nodeList.add(teleportationNode); //Erstelle eine TeleportationNode
-                        teleportationNodes.add(teleportationNode);
+                        TeleportationNode teleportationNode = new TeleportationNode(new Position(j, i), charArray[i][j]); //Erstelle eine TeleportationNode
+                        nodeList.add(teleportationNode); // Fuege sie der allg. Nodelist hinzu
+                        teleportationNodes.add(teleportationNode); // Fuege sie der teleportationNodeList hinzu
                         break;
                 }
             }
@@ -58,16 +58,22 @@ public class Graph {
             // Bekomme eine andere TeleportNode mit dem selben Namen
             Optional<Node> teleportationNode = getTeleportationNodeWithName(((TeleportationNode)node), ((TeleportationNode)node).getTeleportName());
             teleportationNode.ifPresent(node1 -> { // Wenn es solch eine Node gibt dann
-                ((TeleportationNode) node).setTeleportNode(node1); //Setze die bekommene Node mögliche Teleportation
-                ((TeleportationNode) node1).setTeleportNode(node); // Und setze dich selbst als TeleportNode
+                ((TeleportationNode) node).setConnectedTeleportNode(node1); //Setze die bekommene Node mögliche Teleportation
+                ((TeleportationNode) node1).setConnectedTeleportNode(node); // Und setze dich selbst als TeleportNode
             });
         });
     }
 
+    /*
+     * @return Alle GoalNodes
+     */
     public List<Node> getGoalNodeList() {
         return goalNodeList;
     }
 
+    /**
+     * Baut aus dem Graphen ein char-Array wieder zusammen (Spielfeld)
+     */
     public char[][] getCharArrayFromGraph() {
         char[][] charArray = new char[10][20]; //Wir kennen die Größe vom Array
         for (Node node : nodeList) { //Für jede Node erstelle den dazugehörigen char
@@ -144,6 +150,9 @@ public class Graph {
         });
     }
 
+    /**
+     * @return Alle TeleportationNodes
+     */
     public List<TeleportationNode> getTeleportationNodes(){
         return teleportationNodes;
     }

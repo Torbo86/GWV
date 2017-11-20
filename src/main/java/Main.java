@@ -34,7 +34,7 @@ public class Main {
 //        List<Node> nodeList = heuristicSearch.startSearch();
 
         AStarSearch aStarSearch = new AStarSearch(labyrinth);
-        List<Node> nodeList = aStarSearch.startSearch();
+        List<Node> nodeList = aStarSearch.startSearch(1);
 
         if (nodeList.isEmpty()) {
             System.out.println("Es wurde kein Weg gefunden");

@@ -12,8 +12,8 @@ public abstract class Node {
     private Node southNachbar;
     private Node westNachbar;
     private Position position;
-    protected boolean isAlreadyVisisted = false;
-    protected boolean isInPath = false;
+    boolean isAlreadyVisisted = false;
+    boolean isInPath = false;
 
     Node(Position position) {
         this.position = position;
