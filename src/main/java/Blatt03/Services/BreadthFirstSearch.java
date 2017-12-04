@@ -1,25 +1,26 @@
-package Services;
+package Blatt03.Services;
 
-import objectives.Labyrinth;
-import objectives.Position;
-import objectives.internalRepresentation.GoalNode;
-import objectives.internalRepresentation.Node;
+import Blatt03.objectives.Labyrinth;
+import Blatt03.objectives.Position;
+import Blatt03.objectives.internalRepresentation.GoalNode;
+import Blatt03.objectives.internalRepresentation.Node;
 
 import java.util.*;
 
-public class HeuristicSearch
-{
+/**
+ * Dies hier ist die Breitensuche
+ */
+public class BreadthFirstSearch {
 
-    private Labyrinth labyrinth;
-    private SearchSpaceService searchSpaceService;
+    private Labyrinth labyrinth; // Das Labyrinth dazu
+    private SearchSpaceService searchSpaceService; // Ein Service der unsere SearchStates besitzt
 
-    public HeuristicSearch(final Labyrinth labyrinth)
-    {
-        this.labyrinth = labyrinth;
-        this.searchSpaceService = new SearchSpaceService();
+    public BreadthFirstSearch(final Labyrinth labyrinth) {
+        this.labyrinth = labyrinth; //Setzen uns unser Labyrinth
+        searchSpaceService = new SearchSpaceService();
     }
 
-    public List<Node> startSearch(){
+    public List<Node> startBreadthSearch() {
         final Queue<Node> queue = new LinkedList<>(); // Erstellen eine Queue für die Breitensuche
         final Map<Position, Position> path = new HashMap<>(); // Erstellen eine Map um später den Weg zu bekommen
 
@@ -30,12 +31,10 @@ public class HeuristicSearch
         while (!queue.isEmpty()) { // Mache solange, bis die Queue leer ist
             Node parentNode = queue.remove(); // Entferne das erste Element aus der Queue
 
-            int queueSize = queue.size(); // Wir merken uns die Queuesize, damit wir nicht unnötig viele Searchstates haben
-
             if (parentNode instanceof GoalNode) { // Wenn wir das Goal haben
                 searchSpaceService.printAllSearchStates(); // Dann printe alle Searchstates
                 labyrinth.getGraph().resetAllNodes(); //Wir resetten einmal den Graphen um einen neuen zu basteln, wo nur der Weg eingezeichnet ist
-                return constructPath(path, parentNode); // Und gebe den konstruierten Path zurück
+                constructPath(path, parentNode); // Und gebe den konstruierten Path zurück
             }
 
             addNodeToQueue(queue, parentNode.getNorthNachbar(), path, parentNode); // Fügen alle möglichen Nachbarn hinzu
@@ -43,7 +42,9 @@ public class HeuristicSearch
             addNodeToQueue(queue, parentNode.getWestNachbar(), path, parentNode);
             addNodeToQueue(queue, parentNode.getSouthNachbar(), path, parentNode);
 
-            parentNode.setInPath(true); // Bereits abgearbeitet
+            if(!(parentNode instanceof GoalNode)) {
+                parentNode.setInPath(true); // Bereits abgearbeitet
+            }
 
             searchSpaceService.extractSearchStateFromLabyrinth(labyrinth, parentNode.getPosition(), queue.size()); //Erstellen uns ein Searchstate von dem jetzigen State
 
@@ -86,101 +87,13 @@ public class HeuristicSearch
      * @param map        Die Map mit den Wegen
      * @param parentNode Der ParentNode
      */
-    private void addNodeToQueue(Queue<Node> queue, Node nachbar, Map<Position, Position> map, Node parentNode)
-    {
+    private void addNodeToQueue(Queue<Node> queue, Node nachbar, Map<Position, Position> map, Node parentNode) {
         if (nachbar != null
                 && nachbar.isPossible()
-                && !nachbar.isAlreadyVisited())
-        {
+                && !nachbar.isAlreadyVisited()) {
             queue.add(nachbar);
             nachbar.setAlreadyVisisted(true);
             map.put(nachbar.getPosition(), parentNode.getPosition());
         }
     }
-
-    /**
-
-     private Node getBestNodeWithMoreGoalNodes(List<Node> nodeList)
-     {
-     Node bestNode = null;
-     double bestNodeDistance = Double.MAX_VALUE;
-
-     for(Node node : nodeList){
-     double distance = Double.MAX_VALUE;
-
-     for(Node goalNode : labyrinth.getGraph().getGoalNodeList())
-     {
-     double goalDistance = getEuclideanDistance(node, goalNode);
-     for (TeleportationNode teleportationNode : labyrinth.getGraph().getTeleportationNodes())
-     {
-     double distanceWithTeleporters = getEuclideanDistance(node, teleportationNode) + getEuclideanDistance(teleportationNode.getTeleportNode(), goalNode);
-     if (distanceWithTeleporters < goalDistance)
-     {
-     goalDistance = distanceWithTeleporters;
-     }
-     }
-
-     if(goalDistance < distance)
-     {
-     distance = goalDistance;
-     }
-     }
-
-     if (distance < bestNodeDistance)
-     {
-     bestNode = node;
-     bestNodeDistance = distance;
-     }
-     }
-     return bestNode;
-     }
-
-     private Node getBestNode(List<Node> nodeList)
-     {
-     Node bestNode = null;
-     double bestNodeDistance = Double.MAX_VALUE;
-
-     for(Node node : nodeList){
-     double distance = getEuclideanDistance(node, labyrinth.getGraph().getGoalNode());
-
-     if(distance < bestNodeDistance)
-     {
-     bestNode = node;
-     bestNodeDistance = distance;
-     }
-     }
-     return bestNode;
-     }
-
-     private Node getBestNodeWithPortals(List<Node> nodeList){
-     Node bestNode = null;
-     double bestNodeDistance = Double.MAX_VALUE;
-
-     for(Node node : nodeList){
-     double distance = getEuclideanDistance(node, labyrinth.getGraph().getGoalNode());
-
-     for(TeleportationNode teleportationNode : labyrinth.getGraph().getTeleportationNodes()){
-     double distanceWithTeleporters = getEuclideanDistance(node, teleportationNode) + getEuclideanDistance(teleportationNode.getTeleportNode(), labyrinth.getGraph().getGoalNode());
-
-     if(distanceWithTeleporters < distance){
-     distance = distanceWithTeleporters;
-     }
-     }
-
-     if(distance < bestNodeDistance){
-     bestNode = node;
-     bestNodeDistance = distance;
-     }
-     }
-     return bestNode;
-     }
-
-     private double getEuclideanDistance(Node node, Node node2)
-     {
-     double ycoord = Math.abs (node.getPosition().getY() - node2.getPosition().getY());
-     double xcoord = Math.abs (node.getPosition().getX() - node2.getPosition().getX());
-     return Math.sqrt((ycoord)*(ycoord) +(xcoord)*(xcoord));
-     }
-
-     */
 }

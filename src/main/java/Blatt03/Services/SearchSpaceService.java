@@ -1,9 +1,8 @@
-package Services;
+package Blatt03.Services;
 
-import objectives.Labyrinth;
-import objectives.Position;
-import objectives.SearchState;
-import objectives.internalRepresentation.Node;
+import Blatt03.objectives.Labyrinth;
+import Blatt03.objectives.Position;
+import Blatt03.objectives.SearchState;
 
 import java.util.ArrayList;
 import java.util.List;

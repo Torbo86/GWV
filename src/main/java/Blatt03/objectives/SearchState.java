@@ -1,4 +1,4 @@
-package objectives;
+package Blatt03.objectives;
 
 /**
  * Diese Klasse repräsentiert ein Searchstate

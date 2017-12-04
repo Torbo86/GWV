@@ -1,10 +1,10 @@
-package Services;
+package Blatt03.Services;
 
-import objectives.Labyrinth;
-import objectives.Position;
-import objectives.internalRepresentation.GoalNode;
-import objectives.internalRepresentation.Node;
-import objectives.internalRepresentation.TeleportationNode;
+import Blatt03.objectives.Labyrinth;
+import Blatt03.objectives.Position;
+import Blatt03.objectives.internalRepresentation.GoalNode;
+import Blatt03.objectives.internalRepresentation.Node;
+import Blatt03.objectives.internalRepresentation.TeleportationNode;
 
 import java.util.*;
 

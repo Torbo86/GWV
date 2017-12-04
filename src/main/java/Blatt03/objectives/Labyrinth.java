@@ -1,6 +1,6 @@
-package objectives;
+package Blatt03.objectives;
 
-import objectives.internalRepresentation.Graph;
+import Blatt03.objectives.internalRepresentation.Graph;
 
 /**
  * Das Labyrinth selbst (Kann weggeschmissen werden grundsätzlich)

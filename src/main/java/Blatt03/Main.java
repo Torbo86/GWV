@@ -1,10 +1,10 @@
-import Services.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import objectives.Labyrinth;
-import objectives.internalRepresentation.Node;
+package Blatt03;
+
+import Blatt03.Services.*;
+import Blatt03.objectives.Labyrinth;
+import Blatt03.objectives.internalRepresentation.Node;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,5 +53,5 @@ public class Main {
 
     Aufgabe 4.2.4:
 
-    Einfach mit SECOND_LABYRINTH in der Main-Klasse das Programm starten.
+    Einfach mit SECOND_LABYRINTH in der Blatt03.Main-Klasse das Programm starten.
  */

@@ -1,6 +1,6 @@
-package objectives.internalRepresentation;
+package Blatt03.objectives.internalRepresentation;
 
-import objectives.Position;
+import Blatt03.objectives.Position;
 
 /**
  * Diese Node repräsentiert die Teleportationfähigkeit

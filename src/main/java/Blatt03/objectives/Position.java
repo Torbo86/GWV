@@ -1,4 +1,4 @@
-package objectives;
+package Blatt03.objectives;
 
 public class Position {
 
