@@ -13,9 +13,9 @@ public class MatrixOutputService {
     public void printOutput(){
         for(int i = 0; i < matrix.getMatrix().length; i++){
             for(int j = 0; j < matrix.getMatrix().length; j++){
-                System.out.print("| " + matrix.getMatrix()[i][j].getCurrentGameValue() + " ");
+                System.out.print("| " + matrix.getMatrix()[i][j].getCurrentGameValue().getName() + " ");
             }
-            System.out.print(" |\n");
+            System.out.print("|\n");
         }
     }
 }
